@@ -1,0 +1,60 @@
+  <!-- books.show 詳細 -->
+
+<main>
+  <p id="notice"><%= flash[:notice] %></p>
+
+  <div class='container px-5 px-sm-0'>
+    <div class='row'>
+      <div class='col-md-3'>
+        <!-- user情報のテンプレート　現在エラーが出ている箇所 -->
+        <%= render 'layouts/sidebar' %>
+
+      </div>
+
+      <!-- 投稿一覧 本人のみ -->
+      <div class='col-md-8 offset-md-1'>
+        <h2>Book detail</h2>
+        <table class='table table-hover table-inverse'>
+          <!-- tbody内に投稿データが入る -->
+          <tbody>
+              <tr>
+                <td>
+                  <%= link_to user_path(@user) do %>
+                    <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %></a>
+                  <% end %>
+                  <!-- link_to user_path(@user) do　で囲むとリンク漬けが可能 -->
+
+                    <br><%= link_to @user.name, user_path(@user) %>
+                    <!-- link_to @user.nameでuser名を呼び出し、表示する。
+                     @user~を""で囲むと文字列になるので注意 -->
+                </td>
+                <td>
+                  <a><%= @bookf.title %>
+                  </a><!-- book.find -->
+                </td>
+                <td>
+                  <a><%= @bookf.body %></a><!-- book.find -->
+                </td>
+
+                <!-- current_user　で一致しているかを確認 =なら表示 -->
+                <% if @bookf.user == current_user %>
+                  <td>
+                    <a><%= link_to "Edit", edit_book_path(@bookf), class: "btn btn-sm btn-success" %></a>
+                    <!-- class: "btn btn-sm btn-success" ボタンのレイアウト -->
+                  </td>
+                  <td>
+                    <a><%= link_to "Destroy", book_path(@bookf), class: "btn btn-sm btn-danger", method: :delete, data: {confirm: "削除しますか？"} %></a>
+                    <!-- data: {confirm: "削除しますか？"} で確認ログを表示 -->
+                  </td>
+                <% else %>
+                  <td></td>
+                  <td></td>
+                <% end %>
+
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

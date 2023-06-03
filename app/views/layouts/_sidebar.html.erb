@@ -1,0 +1,52 @@
+
+<!-- sidebarのテンプレートファイル -->
+
+<!-- user editのリンクは本人のみ飛ぶ if文　他人は自分のマイページに　-->
+
+<h2>User info</h2>
+
+<!-- user情報 -->
+<!-- user.show では表示できた それ以外のページではエラーが起きる -->
+<!--　これを実施できたら、投稿一覧の画像データも同じように表示させること -->
+<table class='table'>
+  <tr>
+    <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %>
+  </tr>
+  <tr>
+    <th>name</th>
+    <th><%= @user.name %></th>
+  </tr>
+  <tr>
+    <th>introduction</th>
+    <th><%= @user.introduction %></th>
+  </tr>
+</table>
+
+<!-- user.edit -->
+<!-- 下の「d-grid～」が外枠、「i class」がfont
+link_to に classを直接書き込むことで、css装飾が可能に -->
+
+  <div class="d-grid gap-2">
+    <%= link_to edit_user_path(@user), class:"btn btn-outline-secondary btn-block" do %>
+      <i class="fas fa-user-cog"></i>
+    <% end %>
+  </div>
+
+<!-- 新規投稿 -->
+<h2 class="mt-3">New book</h2>
+<%= form_with model: @book, url:'/books', local:true do |f| %>
+  <input type="hidden" name="authenticity_token" value="euanJm1ZnqPSafYMeiMeLp0kaGQ8zlC8Tb6fDfS5TUDo5c3F1yLum7coItykOTPY4kX6sjIEQ5oLIaYwHZTIyQ" autocomplete="off" />
+  <!-- hidden～のコードはサイバー攻撃を防ぐもの？ -->
+  <div class="form-group"> <!-- form-group -->
+    <label for="book_title">Title</label>
+    <%= f.text_field :title, class: "form-control" %> <!-- class適応でレイアウト調整 -->
+  </div>
+  <div class="form-group">
+    <label for="book_body">Opinion</label>
+    <%= f.text_area :body, class: "form-control" %> <!-- class適応でレイアウト調整 -->
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Create Book', class: "btn btn-sm btn-success" %>
+  </div>
+<% end %>
+

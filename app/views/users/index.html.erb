@@ -1,0 +1,51 @@
+<!-- user.index 一覧 -->
+<main>
+  <p id="notice"><%= flash[:notice] %></p>
+
+  <div class='container px-5 px-sm-0'>
+    <div class='row'>
+      <div class='col-md-3'>
+
+        <!-- 新規投稿 -->
+        <%= render 'layouts/sidebar' %>
+      </div>
+
+      <!-- 投稿一覧 -->
+      <div class='col-md-8 offset-md-1'>
+        <h2>Users</h2>
+        <table class='table table-hover table-inverse'>
+          <thead>
+            <tr>
+              <th>image</th>
+              <th>name</th>
+              <th></th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <!-- tbody内に投稿データが入る -->
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td>
+                  <%= link_to user_path(user) do %>
+                    <%= attachment_image_tag user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "default-image.jpg" %>
+                  <% end %>
+                </td><!-- image_tagの後は @userではなく、userが○ @userの中のuser、その中のimageを参照する？-->
+                <td>
+                  <a><%= user.name %></a>
+                </td>
+                <td>
+                  <a><%= link_to "Show", user_path(user.id) %></a>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+
+
